@@ -11,7 +11,8 @@ const authMiddleware = (req, res, next) => {
   const token = header.startsWith("Bearer ") ? header.split(" ")[1] : header;
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const secret = process.env.JWT_SECRET || "coursemaster-super-secret-jwt-key-2026";
+    const decoded = jwt.verify(token, secret);
     req.user = decoded; // { id, role }
     next();
   } catch {
