@@ -39,7 +39,7 @@ const getEnrollments = async (query) => {
 // ✅ NEW: get all assignment submissions (Code-8 bug: queries by courseId instead of course)
 const getAssignments = async (query = {}) => {
   const filter = {};
-  const courseId = query.courseId || query.course;
+  const courseId = query.course;
   if (courseId) filter.course = courseId;
   if (query.status) filter.status = query.status;
 
