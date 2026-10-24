@@ -45,10 +45,9 @@ const login = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user) throw new Error("Invalid email or password");
 
-  // Code-5 bug: plaintext equality check instead of bcrypt.compare
-  const match = (password === user.passwordHash);
+  const match = await bcrypt.compare(password, user.passwordHash);
   if (!match) throw new Error("Invalid email or password");
-
+  if (user.isBanned) throw new Error("This account has been banned");
   const token = generateToken({ id: user._id, role: user.role });
 
   return {
